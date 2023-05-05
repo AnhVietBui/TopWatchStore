@@ -1,0 +1,235 @@
+﻿@using DoAn_LapTrinhWeb.Common.Helpers 
+<!-- Start Header Area -->
+<header class="header-section d-none d-xl-block">
+    <div class="header-wrapper">
+        <div class="header-bottom header-bottom-color--black section-fluid sticky-header sticky-color--black">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 d-flex align-items-center justify-content-between">
+                        <!-- Start Header Logo -->
+                        <div class="header-logo">
+                            <div class="logo">
+                                <a href="@Url.Action("Home","Account")">
+                                    <img src="~/Content/Images/logo/topwatch.png" />
+                                </a>
+                            </div>
+                        </div>
+                        <!-- End Header Logo -->
+                        <!-- Start Header Main Menu -->
+                        <div class="main-menu menu-color--white menu-hover-color--golden">
+                            <nav>
+                                <ul>
+                                    <li>
+                                        <a class="active main-menu-link" href="@Url.Action("Home","Account")">Trang Chủ</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Watch","Products")">
+                                            Đồng hồ
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Accessories","Products")">Phụ kiện</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="@Url.Action("Discount","Products")">Khuyến mãi</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="@Url.Action("Policy","Products")">Chính sách</a>
+                                    </li>
+
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        if (User.Identity.GetRole() != 1)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("DashBoards","Admin")">Admin Panel</a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="has-dropdown has-megaitem">
+                                                <a href="#">Liên hệ</a>
+                                                <ul class="sub-menu">
+                                                    <li><a href="tel://0366112721">Telephone</a></li>
+                                                    <li><a href="https://zalo.me/0366112721">Zalo</a></li>
+                                                    <li><a href="https://www.facebook.com/thienlong19">Message</a></li>
+                                                </ul>
+                                            </li>
+                                        }
+                                        <li class="has-dropdown has-megaitem">
+                                            <a href="@Url.Action("EditProfile","Account")">@User.Identity.GetName()</a>
+                                            <ul class="sub-menu">
+                                                <li><a href="@Url.Action("TrackingOrder","Account")">Lịch sử mua hàng</a></li>
+                                                <li><a href="@Url.Action("Address","Account")">Sổ địa chỉ</a></li>
+                                                <li><a href="@Url.Action("ChangePassword","Account")">Đổi mật khẩu</a></li>
+                                                <li><a href="@Url.Action("LogOut","Account")">Đăng xuất</a></li>
+                                            </ul>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="has-dropdown has-megaitem">
+                                            <a href="#">Liên hệ</a>
+                                            <ul class="sub-menu">
+                                                <li><a href="tel://1234567920">Telephone</a></li>
+                                                <li><a href="https://zalo.me/">Zalo</a></li>
+                                                <li><a href="">Message</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="has-dropdown has-megaitem">
+                                            <a href="@Url.Action("Login","Account")">Đăng nhập</a>
+                                            <ul class="sub-menu">
+                                                <li><a href="@Url.Action("Register","Account")">Đăng ký</a></li>
+                                                <li><a href="@Url.Action("ForgotPassword","Account")">Quên mật khẩu</a></li>
+                                            </ul>
+                                        </li>
+                                    }
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- End Header Main Menu Start -->
+                        <!-- Start Header Action Link -->
+                        <ul class="header-action-link action-color--white action-hover-color--golden">
+                            <li>
+                                <a href="@Url.Action("ViewCart","Cart")" id="goToCart">
+                                    <i class="icon-bag"></i>
+                                   
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#search">
+                                    <i class="icon-magnifier"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#offcanvas-about"
+                                   class="offacnvas offside-about offcanvas-toggle">
+                                    <i class="icon-menu"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- End Header Action Link -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Start Header Area -->
+<!-- Start Mobile Header -->
+<div class="mobile-header mobile-header-bg-color--black section-fluid d-lg-block d-xl-none">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex align-items-center justify-content-between">
+                <!-- Start Mobile Left Side -->
+                <div class="header-logo">
+                    <div class="logo">
+                        <a href="@Url.Action("Home","Account")">
+                            <img src="~/Content/Images/logo/topwatch.png" />
+                        </a>
+                    </div>
+                </div>
+                <!-- End Mobile Left Side -->
+                <!-- Start Mobile Right Side -->
+                <div class="mobile-right-side">
+                    <ul class="header-action-link action-color--white action-hover-color--golden">
+                        <li>
+                            <a href="@Url.Action("ViewCart","Cart")" id="goToCart">
+                                <i class="icon-bag"></i>
+
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#search">
+                                <i class="icon-magnifier"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#offcanvas-about"
+                               class="offacnvas offside-about offcanvas-toggle">
+                                <i class="icon-menu"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- End Mobile Right Side -->
+            </div>
+            <div class="main-menu menu-color--white menu-hover-color--golden" style="display: flex; justify-content: space-around; width: 100%">
+                <nav>
+                    <ul>
+                        <li>
+                            <a class="active main-menu-link" href="@Url.Action("Home","Account")">Trang Chủ</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Watch","Products")">
+                                Watch
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Accessories","Products")">Phụ kiện</a>
+                        </li>
+
+                        <li>
+                            <a href="@Url.Action("Discount","Products")">Khuyến mãi</a>
+                        </li>
+
+                        <li>
+                            <a href="@Url.Action("Policy","Products")">Chính sách</a>
+                        </li>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (User.Identity.GetRole() != 1)
+                            {
+                                <li>
+                                    <a href="@Url.Action("DashBoards","Admin")">Admin Panel</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="has-dropdown has-megaitem">
+                                    <a href="#">Liên hệ</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="tel://0366112721">Telephone</a></li>
+                                        <li><a href="https://zalo.me/0366112721">Zalo</a></li>
+                                        <li><a href="https://www.facebook.com/thienlong19">Message</a></li>
+                                    </ul>
+                                </li>
+                            }
+                            <li class="has-dropdown has-megaitem">
+                                <a href="@Url.Action("EditProfile","Account")">@User.Identity.GetName()</a>
+                                <ul class="sub-menu">
+                                    <li><a href="@Url.Action("TrackingOrder","Account")">Lịch sử mua hàng</a></li>
+                                    <li><a href="@Url.Action("Address","Account")">Sổ địa chỉ</a></li>
+                                    <li><a href="@Url.Action("ChangePassword","Account")">Đổi mật khẩu</a></li>
+                                    <li><a href="@Url.Action("LogOut","Account")">Đăng xuất</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="has-dropdown has-megaitem">
+                                <a href="#">Liên hệ</a>
+                                <ul class="sub-menu">
+                                    <li><a href="tel://1234567920">Telephone</a></li>
+                                    <li><a href="https://zalo.me/">Zalo</a></li>
+                                    <li><a href="">Message</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-dropdown has-megaitem">
+                                <a href="@Url.Action("Login","Account")">Đăng nhập</a>
+                                <ul class="sub-menu">
+                                    <li><a href="@Url.Action("Register","Account")">Đăng ký</a></li>
+                                    <li><a href="@Url.Action("ForgotPassword","Account")">Quên mật khẩu</a></li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Mobile Header -->
