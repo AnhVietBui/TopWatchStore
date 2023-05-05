@@ -565,7 +565,7 @@ namespace DoAn_LapTrinhWeb.Controllers
             string partnerCode = "MOMOOJOI20210710";
             string accessKey = "iPXneGmrJH0G8FOP";
             string serectkey = "sFcbSGRSJjwGxwhhcEktCHWYUuTuPNDB";
-            string orderInfo = "Thanh toán cho đơn hàng tại web";
+            string orderInfo = "Thanh toán cho đơn hàng tại web TopWatch";
             string returnUrl = "https://localhost:44336/Account/ReturnUrl/" + id;
             string notifyurl = "http://ba1adf48beba.ngrok.io/Home/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
 

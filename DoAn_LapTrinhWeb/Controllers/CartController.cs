@@ -136,6 +136,7 @@ namespace DoAn_LapTrinhWeb.Controllers
                     orderAddressId = orderAdress.orderAddressId,
                     oder_date = DateTime.Now,
                     update_at = DateTime.Now,
+                    //Thanh toán khi nhận hàng hoặc thanh toán momo
                     payment_id = 1,
                     update_by = User.Identity.GetUserId().ToString(),
                     total = Convert.ToDouble(TempData["Total"])

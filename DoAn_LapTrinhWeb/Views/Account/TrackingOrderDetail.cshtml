@@ -162,15 +162,20 @@
                             @*<p style="font-size:16px;" class="cart_amount">@(order.status == "1" ? "Chờ xử lý": order.status == "2"? "Đang xử lý" : order.status == "3" ? "Hoàn thành": "Bị hủy")</p>*@
                         </div>
                         <div class="cart_subtotal mt-3">
+                            @*Đổi điều kiện hiện loại thanh toán*@
                             @if (order.IsPayment)
                             {
                                 <p style="color:forestgreen">Đã thanh toán</p>
                             }
-                            else
+                            else if (order.total > 50000000)
                             {
                                 <p>Thành toán khi nhận hàng</p>
                             }
-
+                            else 
+                            {
+                                <p>Thanh toán qua momo</p>
+                            }
+                            
 
                         </div>
                     </div>
