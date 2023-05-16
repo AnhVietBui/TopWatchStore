@@ -466,7 +466,6 @@
     <Content Include="Content\UserCSS\vendor\simple-line-icons.css" />
     <Content Include="Content\UserCSS\vendor\vendor.min.css" />
     <Content Include="EmailTemplate\ResetPassword.cshtml" />
-    <Content Include="favicon.ico" />
     <Content Include="Content\fonts\font-awesome\fontawesome-webfont3e6e.svg" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.svg" />

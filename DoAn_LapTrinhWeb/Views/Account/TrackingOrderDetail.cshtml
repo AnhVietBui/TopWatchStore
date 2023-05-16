@@ -143,6 +143,28 @@
                         <div class="cart_subtotal ">
                             <p>Tình trạng đơn hàng</p>
                             <div id="id_qrcode"></div>
+                            @{
+                                string orderStatusText = "";
+                                if (order.status == "1")
+                                {
+                                    orderStatusText = "Chờ xử lý";
+                                }
+                                else if (order.status == "2")
+                                {
+                                    orderStatusText = "Đang giao hàng";
+                                }
+                                else if (order.status == "3")
+                                {
+                                    orderStatusText = "Đã giao hàng";
+                                }
+                                else
+                                {
+                                    orderStatusText = "Đã hủy";
+                                }
+                                string orderInfo = $"Mã đơn hàng: {order.order_id}\n" +
+                                                   $"Tình trạng đơn hàng: {orderStatusText}\n" +
+                                                   $"Tổng tiền: {order.total.ToString("#,0₫", culture.NumberFormat)}";
+                            }
                             @if (order.status == "1")
                             {
                                 <input id="textqr" type="hidden" value="Dang xu ly" />
@@ -153,7 +175,10 @@
                             }
                             else if (order.status == "3")
                             {
-                                <input id="textqr" type="hidden" value="Da giao hang" />
+                                @*<input id="textqr" type="hidden" value="@orderInfo" />*@
+                                @*<div id="id_qrcode">@orderInfo</div>*@
+                                //Cần fix
+                                <div id="id_qrcode"><input id="textqr" type="hidden" value="@orderInfo" /></div>
                             }
                             else
                             {
@@ -196,5 +221,7 @@
             correctLevel: QRCode.CorrectLevel.H
         });
     }
+
+    document.addEventListener("DOMContentLoaded", onReady);
 </script>
 <!-- ...:::: End Account Dashboard Section:::... -->

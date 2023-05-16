@@ -192,19 +192,7 @@ namespace DoAn_LapTrinhWeb.Controllers
 
                 await db.SaveChangesAsync();
                 Session.Remove("Discount");
-                Session.Remove("Discountcode");
-                //emailID = User.Identity.GetEmail();
-                //orderID = order.order_id.ToString();
-                //orderDiscount = (priceSum + 30000 - order.total).ToString("#,0₫", culture.NumberFormat);
-                //orderPrice = priceSum.ToString("#,0₫", culture.NumberFormat);
-                //orderTotal = order.total.ToString("#,0₫", culture.NumberFormat);
-                //string a = "https://localhost:44336/order_detail/" + orderID + "/qr";
-                //ViewBag.link = a;
-                //var link = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=" + a;
-                //string content = System.IO.File.ReadAllText(Server.MapPath("~/Content/html/sendQRMail.html"));
-                //content = content.Replace("{{link}}", link);
-                //sendMailQR(User.Identity.GetEmail(), content);
-                //SendVerificationLinkEmail(emailID, orderID, orderItem, orderDiscount, orderPrice, orderTotal, contentWard, district, province); //nếu muốn gửi email đơn hàng thì bật lên
+                Session.Remove("Discountcode");                
                 Notification.setNotification3s("Đặt hàng thành công! Vui lòng check lịch sử đặt hàng", "success");
                 return RedirectToAction("TrackingOrder", "Account");
             }
