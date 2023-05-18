@@ -489,3 +489,32 @@ $('#save-order').click(function () {
         $('#save-order').attr('type', 'submit');
     }
 });
+
+$('#save-order-momo').click(function () {
+    const provinceID = $('#province').val();
+    const districtID = $('#district').val();
+    const wardID = $('#ward').val();
+    const userName = $('#user-name').val();
+    const userPhoneNumber = $('#phone-number').val();
+    const content = $('#content').val();
+    if (provinceID === "" || districtID === "" || wardID === "" || userName === "" || userPhoneNumber === "" || content === "") {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 3000,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        Toast.fire({
+            icon: 'error',
+            title: 'Nhập thông tin còn thiếu'
+        })
+        return false;
+    }
+    else {
+        $('#save-order-2').attr('type', 'submit');
+    }
+});

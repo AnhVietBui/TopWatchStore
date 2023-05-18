@@ -74,11 +74,11 @@
                                                     else
                                                     {
                                                         //Điều kiện thanh toán mặt hàng
-                                                        if (item.total > 50000000)
+                                                        if (item.payment_id == 1)
                                                         {
                                                             <a href="#" style="color:red" class="view">Thanh toán khi nhận hàng</a>
                                                         }
-                                                        else
+                                                        else if (item.payment_id == 3)
                                                         {
                                                             <a href="@Url.Action("PaymentMoMo","Account",new {id=item.order_id})" style="color:blueviolet" class="view">Thanh toán MoMo</a>
                                                         }

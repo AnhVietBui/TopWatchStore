@@ -144,46 +144,37 @@
                             <p>Tình trạng đơn hàng</p>
                             <div id="id_qrcode"></div>
                             @{
+                                //Cần fix
+                                string ttSanPham = "Thong tin san pham:\n";
+                                foreach (var item in Model)
+                                {
+                                    ttSanPham += $"- {item.Product.product_name}: {item.quantity} x {item.price.ToString("#,0₫", culture.NumberFormat)}\n";
+                                }
+                                ttSanPham = ttSanPham.Replace("\"", "&quot;").Replace("'", "&#39;").Replace("<", "&lt;").Replace(">", "&gt;");
+                                //Bên trên cần fix
                                 string orderStatusText = "";
                                 if (order.status == "1")
                                 {
-                                    orderStatusText = "Chờ xử lý";
+                                    orderStatusText = "Cho xu ly";
                                 }
                                 else if (order.status == "2")
                                 {
-                                    orderStatusText = "Đang giao hàng";
+                                    orderStatusText = "Dang giao hang";
                                 }
                                 else if (order.status == "3")
                                 {
-                                    orderStatusText = "Đã giao hàng";
+                                    orderStatusText = "Da giao hang";
                                 }
                                 else
                                 {
-                                    orderStatusText = "Đã hủy";
+                                    orderStatusText = "Da huy";
                                 }
-                                string orderInfo = $"Mã đơn hàng: {order.order_id}\n" +
-                                                   $"Tình trạng đơn hàng: {orderStatusText}\n" +
-                                                   $"Tổng tiền: {order.total.ToString("#,0₫", culture.NumberFormat)}";
+                                string orderInfo = $"Ma don hang: {order.order_id}\n" +
+                                                   $"Tinh trang don hang: {orderStatusText}\n" +                                                  
+                                                   $"Tong tien: {order.total.ToString("#,0₫", culture.NumberFormat)}\n";
                             }
-                            @if (order.status == "1")
-                            {
-                                <input id="textqr" type="hidden" value="Dang xu ly" />
-                            }
-                            else if (order.status == "2")
-                            {
-                                <input id="textqr" type="hidden" value="Dang giao hang" />
-                            }
-                            else if (order.status == "3")
-                            {
-                                @*<input id="textqr" type="hidden" value="@orderInfo" />*@
-                                @*<div id="id_qrcode">@orderInfo</div>*@
-                                //Cần fix
-                                <div id="id_qrcode"><input id="textqr" type="hidden" value="@orderInfo" /></div>
-                            }
-                            else
-                            {
-                                <input id="textqr" type="hidden" value="Da huy" />
-                            }
+                            <input id="textqr" type="hidden" value="@orderInfo" />
+                            @*<input id="textqr" type="hidden" value="@Html.Raw(ttSanPham)" />*@
                             @*<p style="font-size:16px;" class="cart_amount">@(order.status == "1" ? "Chờ xử lý": order.status == "2"? "Đang xử lý" : order.status == "3" ? "Hoàn thành": "Bị hủy")</p>*@
                         </div>
                         <div class="cart_subtotal mt-3">
@@ -192,7 +183,7 @@
                             {
                                 <p style="color:forestgreen">Đã thanh toán</p>
                             }
-                            else if (order.total > 50000000)
+                            else if (order.Payment.payment_id == 1)
                             {
                                 <p>Thành toán khi nhận hàng</p>
                             }
@@ -221,7 +212,5 @@
             correctLevel: QRCode.CorrectLevel.H
         });
     }
-
-    document.addEventListener("DOMContentLoaded", onReady);
 </script>
 <!-- ...:::: End Account Dashboard Section:::... -->

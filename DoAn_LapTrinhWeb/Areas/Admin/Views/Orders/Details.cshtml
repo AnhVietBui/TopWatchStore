@@ -136,18 +136,9 @@
                                                             <!--end::Svg Icon-->Phương thức thanh toán
                                                         </div>
                                                     </td>
-                                                    @if (Model.total > 50000000)
-                                                    {
-                                                        <td class="fw-bolder text-end">
-                                                            @Model.Payment.payment_name
-                                                        </td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td class="fw-bolder text-end">
-                                                            Thanh toán qua momo
-                                                        </td>
-                                                    }
+                                                    <td class="fw-bolder text-end">
+                                                        @Model.Payment.payment_name
+                                                    </td>
                                                 </tr>
                                                 <!--end::Payment method-->
                                                 <!--begin::Date-->

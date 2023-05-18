@@ -98,7 +98,7 @@ namespace DoAn_LapTrinhWeb.Controllers
         //Lưu đơn hàng
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> SaveOrder(OrderAddress orderAdress, string note, string emailID, string orderID, string orderItem, string orderDiscount, string orderPrice, string orderTotal, string contentWard, string district, string province)
+        public async Task<ActionResult> SaveOrder(OrderAddress orderAdress, string note, string emailID, string orderID, string orderItem, string orderDiscount, string orderPrice, string orderTotal, string contentWard, string district, string province, int paymentId)
         {
             try
             {
@@ -137,7 +137,7 @@ namespace DoAn_LapTrinhWeb.Controllers
                     oder_date = DateTime.Now,
                     update_at = DateTime.Now,
                     //Thanh toán khi nhận hàng hoặc thanh toán momo
-                    payment_id = 1,
+                    payment_id = paymentId,
                     update_by = User.Identity.GetUserId().ToString(),
                     total = Convert.ToDouble(TempData["Total"])
                 };
