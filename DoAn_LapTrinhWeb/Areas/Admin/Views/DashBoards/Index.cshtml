@@ -24,6 +24,7 @@
     double total = 0;
     double total2 = 0;
 }
+
 <!--begin::toolbar-->
 <div class="toolbar" id="kt_toolbar">
     <!--begin::Container-->
@@ -517,18 +518,9 @@
         </div>
         <!--end::Row-->
         @*THÊM THỐNG KÊ*@
-        <!--<div class="card">
+        <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Thống kê danh thu</h3>
-
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
+                <h3 class="card-title">Thống kê doanh thu</h3>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -538,26 +530,31 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Ngày</th>
-                                    <th>Doanh thu</th>
-                                    <th>Lợi nhuận</th>
-                                </tr>
-                            </thead>
-                            <tbody id="load_data"></tbody>
-                        </table>
+                        <div class="form-group">
+                            <label for="fromDate">Từ ngày:</label>
+                            <input type="text" class="form-control" id="fromDate" name="fromDate" placeholder="DD/MM/YYYY" />
+                        </div>
+                        <div class="form-group">
+                            <label for="toDate">Đến ngày:</label>
+                            <input type="text" class="form-control" id="toDate" name="toDate" placeholder="DD/MM/YYYY" />
+                        </div>
+                        <button type="button" class="btn btn-primary filterBtn">Lọc</button>
                     </div>
                 </div>
-            </div>-->
-        <!-- /.card-body -->
-        <!--<div class="card-footer">
-            Footer
-        </div>-->
-        <!-- /.card-footer-->
-        <!--</div>-->
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th><strong>STT</strong></th>
+                            <th><strong>Ngày</strong></th>
+                            <th><strong>Doanh thu</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody id="load_data">
+                        <!-- Các hàng dữ liệu sẽ được thêm vào đây -->
+                    </tbody>
+                </table>
+            </div>
+        </div>      
         @*HẾT THÊM THỐNG KÊ*@
     </div>
     <!--end::Container-->
@@ -566,44 +563,33 @@
 @section scripts{
     <script src="~/Scripts/AdminJS/vis-timeline.bundle.js"></script>
     <script src="~/Scripts/AdminJS/widgets.bundle.js"></script>
-    @*THÊM THỐNG KÊ
+    @*THÊM THỐNG KÊ*@
     <script>
         $(function () {
-            /* ChartJS
-             * -------
-             * Here we will create a few charts using ChartJS
-             */
+            var filterBtn = $('.filterBtn');
+            console.log("Số lượng nút Lọc: " + filterBtn.length);
 
-            var arrDoanhThu = [];
-            var arrLoiNhuan = [];
-            var arrDate = [];
-            $.ajax({
-                url: '/Statistical/GetStatistical',
-                type: 'GET',
-                data: { fromDate: '', toDate: '' },
-                success: function (rs) {
+            filterBtn.on('click', function () {
+                var fromDate = $('#fromDate').val();
+                var toDate = $('#toDate').val();
 
-                    $.each(rs.Data, function (i, item) {
-                        var strDate = moment(item.Date).format('DD/MM/yyyy');
-                        arrDate.push(strDate);
-                        arrDoanhThu.push(item.DoanhThu);
-                        arrLoiNhuan.push(item.LoiNhuan);
-                    });
-                    var areaChartData = {
-                        labels: arrDate,
-                        datasets: [
-                            {
-                                label: 'Lợi nhuận',
-                                backgroundColor: 'rgba(60,141,188,0.9)',
-                                borderColor: 'rgba(60,141,188,0.8)',
-                                pointRadius: false,
-                                pointColor: '#3b8bba',
-                                pointStrokeColor: 'rgba(60,141,188,1)',
-                                pointHighlightFill: '#fff',
-                                pointHighlightStroke: 'rgba(60,141,188,1)',
-                                data: arrLoiNhuan
-                            },
-                            {
+                $.ajax({
+                    url: '/Admin/DashBoards/GetStatistical',
+                    type: 'GET',
+                    data: { fromDate: fromDate, toDate: toDate },
+                    success: function (rs) {
+                        var arrDoanhThu = [];
+                        var arrDate = [];
+
+                        $.each(rs.Data, function (i, item) {
+                            var strDate = moment(item.Date).format('DD/MM/yyyy');
+                            arrDate.push(strDate);
+                            arrDoanhThu.push(item.DoanhThu);
+                        });
+
+                        var areaChartData = {
+                            labels: arrDate,
+                            datasets: [{
                                 label: 'Danh thu',
                                 backgroundColor: 'rgba(210, 214, 222, 1)',
                                 borderColor: 'rgba(210, 214, 222, 1)',
@@ -613,49 +599,51 @@
                                 pointHighlightFill: '#fff',
                                 pointHighlightStroke: 'rgba(220,220,220,1)',
                                 data: arrDoanhThu
-                            },
-                        ]
-                    }
-                    //-------------
-                    //- BAR CHART -
-                    //-------------
-                    var barChartCanvas = $('#barChart').get(0).getContext('2d')
-                    var barChartData = $.extend(true, {}, areaChartData)
-                    var temp0 = areaChartData.datasets[0]
-                    var temp1 = areaChartData.datasets[1]
-                    barChartData.datasets[0] = temp1
-                    barChartData.datasets[1] = temp0
+                            }]
+                        };
 
-                    var barChartOptions = {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        datasetFill: false
-                    }
+                        var barChartCanvas = $('#barChart').get(0).getContext('2d');
 
-                    new Chart(barChartCanvas, {
-                        type: 'bar',
-                        data: barChartData,
-                        options: barChartOptions
-                    });
-                    load_data(rs.Data);
-                }
+                        var barChart = Chart.getChart(barChartCanvas);
+
+                        // Kiểm tra xem đối tượng Chart đã tồn tại hay không
+                        if (barChart) {
+                            barChart.destroy(); // Hủy biểu đồ hiện tại nếu đã tồn tại
+                        }
+
+                        var barChartData = $.extend(true, {}, areaChartData);
+                        var temp0 = areaChartData.datasets[0];
+                        barChartData.datasets[0] = temp0;
+                        var barChartOptions = {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            datasetFill: false
+                        };
+
+                        new Chart(barChartCanvas, {
+                            type: 'bar',
+                            data: barChartData,
+                            options: barChartOptions
+                        });
+
+                        load_data(rs.Data);
+                    }
+                });
             });
 
-
-        })
-
-        function load_data(data) {
-            var strHtml = "";
-            $.each(data, function (i, item) {
-                var strDate = moment(item.Date).format('DD/MM/yyyy');
-                strHtml += "<tr>";
-                strHtml += "<td>" + (i + 1) + "</td>";
-                strHtml += "<td>" + strDate + "</td>";
-                strHtml += "<td>" + item.DoanhThu + "</td>";
-                strHtml += "<td>" + item.LoiNhuan + "</td>";
-                strHtml += "</tr>";
-            });
-            $('#load_data').html(strHtml);
-        }
-    </script>*@
+            function load_data(data) {
+                var strHtml = "";
+                $.each(data, function (i, item) {
+                    var strDate = moment(item.Date).format('DD/MM/yyyy');
+                    strHtml += "<tr>";
+                    strHtml += "<td>" + (i + 1) + "</td>";
+                    strHtml += "<td>" + strDate + "</td>";
+                    strHtml += "<td>" + item.DoanhThu + "</td>";
+                    strHtml += "</tr>";
+                });
+                $('#load_data').html(strHtml);
+            }
+        });
+       
+    </script>
 }
