@@ -94,10 +94,19 @@ namespace DoAn_LapTrinhWeb.Areas.Admin.Controllers
             Genre genre = db.Genres.FirstOrDefault(m => m.genre_id == id);          
             try
             {
-                result = "delete";
-                db.Genres.Remove(genre);
-                db.SaveChanges();
-                return Json(result, JsonRequestBehavior.AllowGet);
+                Product product = db.Products.FirstOrDefault(m => m.genre_id.Equals(id));
+                if (product == null) {
+                    result = "delete";
+                    db.Genres.Remove(genre);
+                    db.SaveChanges();
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    result = "";
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+                    
             }
             catch
             {

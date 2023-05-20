@@ -188,8 +188,10 @@ namespace DoAn_LapTrinhWeb.Controllers
                     list = (IOrderedQueryable<Product>)db.Products.OrderByDescending(m => m.create_at);
                     break;
             }
+            double price;
+            bool isValidPrice = Double.TryParse(s, out price);
             ViewBag.Countproduct = db.Products.Where(m => m.status == "1" && m.product_name.Contains(s)).Count();          
-            return View("Product", GetProduct(m => m.status == "1" && (m.product_name.Contains(s) || m.product_id.ToString().Contains(s)), page, sortOrder));
+            return View("Product", GetProduct(m => m.status == "1" && (m.product_name.Contains(s) || m.product_id.ToString().Contains(s) || m.Brand.brand_name.Contains(s) || (isValidPrice && m.price <= price)), page, sortOrder));
         }   
         //Get product 
         private IPagedList GetProduct(Expression<Func<Product, bool>> expr, int? page, string sortOrder)

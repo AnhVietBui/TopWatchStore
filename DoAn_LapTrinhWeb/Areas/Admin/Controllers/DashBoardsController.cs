@@ -16,8 +16,8 @@ namespace DoAn_LapTrinhWeb.Areas.Admin.Controllers
         {
             ViewBag.Order = db.Orders.ToList();
             ViewBag.OrderDetail = db.Oder_Detail.ToList();
-            ViewBag.ListOrderDetail1 = db.Oder_Detail.Where(m => m.Product.type == 1).OrderByDescending(m => m.create_at).Take(3).ToList();
-            ViewBag.ListOrderDetail2 = db.Oder_Detail.Where(m => m.Product.type == 2).OrderByDescending(m => m.create_at).Take(3).ToList();
+            ViewBag.ListOrderDetail1 = db.Oder_Detail.Where(m => m.Product.type == 1 && m.create_at.Month == DateTime.Now.Month).OrderByDescending(m => m.quantity).ToList();
+            ViewBag.ListOrderDetail2 = db.Oder_Detail.Where(m => m.Product.type == 2 && m.create_at.Month == DateTime.Now.Month).OrderByDescending(m => m.quantity).ToList();
             ViewBag.ListOrder = db.Orders.OrderByDescending(m => m.oder_date).Take(7).ToList();
             return View();
 

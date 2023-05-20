@@ -50,6 +50,16 @@
                             </ul>
                         </div>
                     </div>
+                    <div class="sidebar-single-widget">
+                        <h6 class="sidebar-title">Tìm Theo Giá</h6>
+                        <div class="sidebar-content">
+                            <input id="searchInput" autocomplete="off" disabled name="s" type="search" placeholder="Khoảng giá" /><br />
+                            <div id="slider" style="color: orange; background-color: orange;">
+                                <div class="ui-slider-handle" style="background-color: orange;"></div>    
+                            </div><br />
+                            <button id="searchButton" class="btn btn-lg btn-golden">Tìm Kiếm</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-10">
@@ -405,12 +415,47 @@
         </div>
     </div>
 </div> <!-- ...:::: End Shop Section:::... -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 @section scripts{
     <script>
         $("select.search").change(function () {
             let getSortBy = $('#sort-for').text();
             const selected = $(this).children("option:selected").val();
             window.location.href = getSortBy + 'sortOrder=' + selected;
+        });
+        $(document).ready(function() {
+          // Khởi tạo thanh kéo
+          $("#slider").slider({
+            range: "max", // Chỉ cho phép kéo về phía bên phải
+            min: 0,       // Giá trị tối thiểu của thanh kéo
+            max: 500,     // Giá trị tối đa của thanh kéo
+            value: 0,   // Giá trị mặc định ban đầu là giá trị lớn nhất
+            slide: function(event, ui) {
+              // Cập nhật giá trị của input tìm kiếm
+              $("#searchInput").val(ui.value + " triệu");
+            }
+          });
+
+          // Xử lý sự kiện khi nhấn nút tìm kiếm
+          $("#searchButton").click(function() {
+            // Lấy giá trị từ input tìm kiếm
+            var searchValue = $("#searchInput").val();
+
+            // Loại bỏ chữ " triệu" và chuyển đổi giá trị sang số
+            var numericValue = parseFloat(searchValue.replace(" triệu", ""));
+
+            // Kiểm tra nếu giá trị là một số hợp lệ
+            if (!isNaN(numericValue)) {
+              // Thực hiện các phép tính hoặc xử lý khác với giá trị
+              numericValue *= 1000000; // Nhân thêm 1 triệu
+
+              // Chuyển hướng đến URL tìm kiếm với giá trị mới của "s"
+              var searchUrl = "@Url.Action("SearchResult", "Products")" + "?s=" + numericValue;
+              window.location.href = searchUrl;
+            }
+          });
         });
     </script>
     <script src="~/Scripts/UserJS/add-to-cart.js"></script>

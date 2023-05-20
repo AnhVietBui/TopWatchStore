@@ -142,7 +142,10 @@
                                                 <!--end::Menu item-->
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
-                                                    <a onclick="deleteOpen(@item.genre_id,'@item.genre_name')" class="menu-link px-3">Xóa</a>
+                                                    @if (item.Products.Count() == 0)
+                                                    {
+                                                        <a onclick="deleteOpen(@item.genre_id,'@item.genre_name')" class="menu-link px-3">Xóa</a>
+                                                    }
                                                 </div>
                                                 <!--end::Menu item-->
                                             </div>
